@@ -57,10 +57,10 @@ class JumpWayPythonMQTTApplicationConnection():
 
 	def on_connect(self, client, obj, flags, rc):
 			self.publishToApplicationStatus("ONLINE")
-			print("rc: "+str(rc))
+			print(("rc: "+str(rc)))
 
 	def on_subscribe(self, client, obj, mid, granted_qos):
-			print("Subscribed: "+str(obj))
+			print(("Subscribed: "+str(obj)))
 
 	def on_message(self, client, obj, msg):
 		splitTopic=msg.topic.split("/")
@@ -107,7 +107,7 @@ class JumpWayPythonMQTTApplicationConnection():
 		else:
 			applicationChannel = '%s/Applications/%s/%s' % (self._configs['locationID'], applicationID, channel)
 			self.mqttClient.subscribe(applicationChannel, qos=qos)
-			print("Subscribed to Application "+channel+" Channel")
+			print(("Subscribed to Application "+channel+" Channel"))
 			return True
 	
 	def subscribeToDeviceChannel(self, channel, qos=0):
@@ -123,7 +123,7 @@ class JumpWayPythonMQTTApplicationConnection():
 		else:
 			deviceChannel = '%s/Devices/%s/%s/%s' % (self._configs['locationID'], self._configs['zoneID'], self._configs['deviceId'], channel)
 			self.mqttClient.subscribe(deviceChannel, qos=qos)
-			print("Subscribed to Device "+channel+" Channel")
+			print(("Subscribed to Device "+channel+" Channel"))
 			return True
 	
 	def publishToApplicationStatus(self, data):
@@ -136,7 +136,7 @@ class JumpWayPythonMQTTApplicationConnection():
 		else:
 			deviceStatusTopic = '%s/Applications/%s/Status' % (self._configs['locationID'], self._configs['applicationID'])
 			self.mqttClient.publish(deviceStatusTopic,data)
-			print("Published to Application Status "+deviceStatusTopic)
+			print(("Published to Application Status "+deviceStatusTopic))
 			
 	def publishToDeviceChannel(self, channel, zone, device, data):
 		if self._configs['locationID'] == None:
@@ -151,10 +151,10 @@ class JumpWayPythonMQTTApplicationConnection():
 		else:
 			deviceChannel = '%s/Devices/%s/%s/%s' % (self._configs['locationID'], zone, device, channel)
 			self.mqttClient.publish(deviceChannel,json.dumps(data))
-			print("Published to Device "+channel+" Channel")
+			print(("Published to Device "+channel+" Channel"))
 
 	def on_publish(self, client, obj, mid):
-			print("Published: "+str(mid))
+			print(("Published: "+str(mid)))
 
 	def on_log(self, client, obj, level, string):
 			print(string)

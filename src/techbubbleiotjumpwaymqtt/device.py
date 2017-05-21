@@ -62,10 +62,10 @@ class JumpWayPythonMQTTDeviceConnection():
 
 	def on_connect(self, client, obj, flags, rc):
 			self.publishToDeviceStatus("ONLINE")
-			print("rc: "+str(rc))
+			print(("rc: "+str(rc)))
 
 	def on_subscribe(self, client, obj, mid, granted_qos):
-			print("Subscribed: "+str(self._configs['deviceName']))
+			print(("Subscribed: "+str(self._configs['deviceName'])))
 
 	def on_message(self, client, obj, msg):
 		splitTopic=msg.topic.split("/")
@@ -103,7 +103,7 @@ class JumpWayPythonMQTTDeviceConnection():
 		else:
 			deviceChannel = '%s/Devices/%s/%s/%s' % (self._configs['locationID'], self._configs['zoneID'], self._configs['deviceId'], channel)
 			self.mqttClient.subscribe(deviceChannel, qos=qos)
-			print("Subscribed to Device "+channel+" Channel")
+			print(("Subscribed to Device "+channel+" Channel"))
 			return True
 	
 	def publishToDeviceStatus(self, data):
@@ -134,7 +134,7 @@ class JumpWayPythonMQTTDeviceConnection():
 		else:
 			deviceChannel = '%s/Devices/%s/%s/%s' % (self._configs['locationID'], self._configs['zoneID'], self._configs['deviceId'], channel)
 			self.mqttClient.publish(deviceChannel,json.dumps(data))
-			print("Published to Device "+channel+" Channel")
+			print(("Published to Device "+channel+" Channel"))
 	
 	def publishToTassActivityRecognitionChannel(self, byteArray, userID):
 		if self._configs['locationID'] == None:
@@ -167,7 +167,7 @@ class JumpWayPythonMQTTDeviceConnection():
 			print("Published to Device Tass Activity Intruder Channel ")
 
 	def on_publish(self, client, obj, mid):
-			print("Published: "+str(mid))
+			print(("Published: "+str(mid)))
 
 	def on_log(self, client, obj, level, string):
 			print(string)
